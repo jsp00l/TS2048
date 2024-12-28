@@ -56,6 +56,7 @@ class Strip {
         return this.tiles[col];
     }
     makeMove() {
+        let tilesAdded = false;
         const moveTilesDown = () => {
             let nonEmptyTiles = [];
             for (let currentIndex = 3; currentIndex >= 0; currentIndex--) {
@@ -91,6 +92,7 @@ class Strip {
                 if (checkCanAdd(firstTile, secondTile)) {
                     this.tiles[1] = Tile.addTiles(firstTile, secondTile);
                     this.tiles[0] = new EmptyTile(0, 0);
+                    tilesAdded = true;
                 }
             }
         };
@@ -98,6 +100,7 @@ class Strip {
             if (checkCanAdd(thirdTile, fourthTile)) {
                 this.tiles[3] = Tile.addTiles(thirdTile, fourthTile);
                 this.tiles[2] = new EmptyTile(0, 0);
+                tilesAdded = true;
                 checkFirstAndSecond();
             }
             else {
@@ -105,6 +108,7 @@ class Strip {
                     if (checkCanAdd(secondTile, thirdTile)) {
                         this.tiles[2] = Tile.addTiles(secondTile, thirdTile);
                         this.tiles[1] = new EmptyTile(0, 0);
+                        tilesAdded = true;
                     }
                     else {
                         checkFirstAndSecond();
@@ -113,6 +117,7 @@ class Strip {
             }
         }
         moveTilesDown();
+        return tilesAdded;
     }
 }
 export { Tile, EmptyTile, Strip };

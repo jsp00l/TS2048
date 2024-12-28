@@ -49,7 +49,7 @@ class Tile implements ITile {
 
 interface IStrip {
     get(col: Column): ITile
-    makeMove(): void
+    makeMove(): boolean
 }
 
 class Strip implements IStrip {
@@ -63,7 +63,8 @@ class Strip implements IStrip {
         return this.tiles[col];
     }
 
-    makeMove() {
+    makeMove(): boolean {
+        let tilesAdded: boolean = false;
         const moveTilesDown = () => {
             let nonEmptyTiles: Tile[] = [];
             for (let currentIndex = 3; currentIndex >= 0; currentIndex--) {
@@ -95,11 +96,13 @@ class Strip implements IStrip {
         const thirdTile = this.tiles[2];
         const fourthTile = this.tiles[3];
 
+
         const checkFirstAndSecond = (): void => {
             if (checkIsNotEmpty(firstTile, secondTile)) {
                 if (checkCanAdd(firstTile, secondTile)) {
                     this.tiles[1] = Tile.addTiles(firstTile as Tile, secondTile as Tile);
                     this.tiles[0] = new EmptyTile(0, 0);
+                    tilesAdded = true;
                 }
             }
         };
@@ -108,6 +111,7 @@ class Strip implements IStrip {
             if (checkCanAdd(thirdTile, fourthTile)) {
                 this.tiles[3] = Tile.addTiles(thirdTile as Tile, fourthTile as Tile);
                 this.tiles[2] = new EmptyTile(0, 0);
+                tilesAdded = true;
                 checkFirstAndSecond();
             }
             else {
@@ -115,6 +119,7 @@ class Strip implements IStrip {
                     if (checkCanAdd(secondTile, thirdTile)) {
                         this.tiles[2] = Tile.addTiles(secondTile as Tile, thirdTile as Tile);
                         this.tiles[1] = new EmptyTile(0, 0);
+                        tilesAdded = true;
                     }
                     else {
                         checkFirstAndSecond();
@@ -124,6 +129,7 @@ class Strip implements IStrip {
             }
         }
         moveTilesDown();
+        return tilesAdded;
     }
 }
 

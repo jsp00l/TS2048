@@ -102,58 +102,62 @@ function spawnRandomTile() {
             }
         }
     }
-    console.log("pairs.length: ", pairs.length);
     if (pairs.length === 0) {
         return;
     }
 
     let [i, j] = pairs[Math.floor(Math.random() * pairs.length)];
-    console.log("[i, j]:", [i, j]);
     tiles[i][j] = new Tile(2 as Value, i as Row, j as Column);
 }
 
 
 
-function performDownMove() {
+function performDownMove(): boolean {
+    let tilesAdded: boolean = false;
     for (let col = 0; col < 4; ++col) {
         let s = new Strip(tiles[0][col], tiles[1][col], tiles[2][col], tiles[3][col]);
-        s.makeMove();
+        tilesAdded = s.makeMove();
         tiles[0][col] = s.tiles[0];
         tiles[1][col] = s.tiles[1];
         tiles[2][col] = s.tiles[2];
         tiles[3][col] = s.tiles[3];
     }
     drawTiles();
+    return tilesAdded;
 }
 
-function performUpMove() {
-    console.log("performUpMove");
+function performUpMove(): boolean {
+    let tilesAdded: boolean = false;
     for (let col = 0; col < 4; ++col) {
         let s = new Strip(tiles[3][col], tiles[2][col], tiles[1][col], tiles[0][col]);
-        s.makeMove();
+        tilesAdded = s.makeMove();
         tiles[0][col] = s.tiles[3];
         tiles[1][col] = s.tiles[2];
         tiles[2][col] = s.tiles[1];
         tiles[3][col] = s.tiles[0];
     }
     drawTiles();
+    return tilesAdded;
 }
 
-function performRightMove() {
+function performRightMove(): boolean {
+    let tilesAdded: boolean = false;
     for (let row = 0; row < 4; ++row) {
         let s = new Strip(tiles[row][0], tiles[row][1], tiles[row][2], tiles[row][3]);
-        s.makeMove();
+        tilesAdded = s.makeMove();
         tiles[row][0] = s.tiles[0];
         tiles[row][1] = s.tiles[1];
         tiles[row][2] = s.tiles[2];
         tiles[row][3] = s.tiles[3];
     }
     drawTiles();
+    return tilesAdded;
 }
 function performLeftMove() {
+    let tilesAdded: boolean;
     for (let row = 0; row < 4; ++row) {
         let s = new Strip(tiles[row][3], tiles[row][2], tiles[row][1], tiles[row][0]);
-        s.makeMove();
+        tilesAdded = s.makeMove();
         tiles[row][0] = s.tiles[3];
         tiles[row][1] = s.tiles[2];
         tiles[row][2] = s.tiles[1];

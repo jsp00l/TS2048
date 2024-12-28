@@ -39,16 +39,16 @@ class Tile implements ITile {
     static valueColorMap: Map<Value, Color> = (() => {
         let m: Map<Value, Color> = new Map<Value, Color>();
         m.set(2, Color.Blue);
-        m.set(4, Color.Blue);
-        m.set(8, Color.Blue);
-        m.set(16, Color.Blue);
-        m.set(32, Color.Blue);
-        m.set(64, Color.Blue);
-        m.set(128, Color.Blue);
-        m.set(256, Color.Blue);
-        m.set(512, Color.Blue);
-        m.set(1024, Color.Blue);
-        m.set(2048, Color.Blue);
+        m.set(4, Color.Red);
+        m.set(8, Color.Orange);
+        m.set(16, Color.Purple);
+        m.set(32, Color.Green);
+        m.set(64, Color.Yellow);
+        m.set(128, Color.GreenDark);
+        m.set(256, Color.Gray);
+        m.set(512, Color.Pink);
+        m.set(1024, Color.Silver);
+        m.set(2048, Color.Gold);
         return m;
     })();
 

@@ -22,6 +22,15 @@ class Tile {
         }
         return false;
     }
+    static areDifferentTiles(t1, t2) {
+        if (t1 instanceof EmptyTile) {
+            if (t2 instanceof EmptyTile) {
+                return false;
+            }
+            return true;
+        }
+        return t1.value !== t2.value;
+    }
     static valueColorMap = (() => {
         let m = new Map();
         m.set(2, Color.Blue);

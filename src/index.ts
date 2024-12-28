@@ -107,16 +107,32 @@ function spawnRandomTile() {
     }
 
     let [i, j] = pairs[Math.floor(Math.random() * pairs.length)];
-    tiles[i][j] = new Tile(2 as Value, i as Row, j as Column);
+
+    let spawnedTile: Tile = new Tile(2 as Value, i as Row, j as Column);
+    if (Math.floor(Math.random() * 100) > 75) {
+        spawnedTile = new Tile(4 as Value, i as Row, j as Column);
+    }
+    tiles[i][j] = spawnedTile;
 }
 
-
+function isDifferent(): boolean {
+    return true;
+}
 
 function performDownMove(): boolean {
     let tilesAdded: boolean = false;
     for (let col = 0; col < 4; ++col) {
         let s = new Strip(tiles[0][col], tiles[1][col], tiles[2][col], tiles[3][col]);
         tilesAdded = s.makeMove();
+
+        let wasDifferent: boolean = Tile.areDifferentTiles(tiles[0][col], s.tiles[0])
+            || Tile.areDifferentTiles(tiles[1][col], s.tiles[1])
+            || Tile.areDifferentTiles(tiles[2][col], s.tiles[2])
+            || Tile.areDifferentTiles(tiles[3][col], s.tiles[3]);
+        if (wasDifferent) {
+            tilesAdded = true;
+        }
+
         tiles[0][col] = s.tiles[0];
         tiles[1][col] = s.tiles[1];
         tiles[2][col] = s.tiles[2];
@@ -131,6 +147,15 @@ function performUpMove(): boolean {
     for (let col = 0; col < 4; ++col) {
         let s = new Strip(tiles[3][col], tiles[2][col], tiles[1][col], tiles[0][col]);
         tilesAdded = s.makeMove();
+
+        let wasDifferent: boolean = Tile.areDifferentTiles(tiles[0][col], s.tiles[3])
+            || Tile.areDifferentTiles(tiles[1][col], s.tiles[2])
+            || Tile.areDifferentTiles(tiles[2][col], s.tiles[1])
+            || Tile.areDifferentTiles(tiles[3][col], s.tiles[0]);
+        if (wasDifferent) {
+            tilesAdded = true;
+        }
+
         tiles[0][col] = s.tiles[3];
         tiles[1][col] = s.tiles[2];
         tiles[2][col] = s.tiles[1];
@@ -145,6 +170,15 @@ function performRightMove(): boolean {
     for (let row = 0; row < 4; ++row) {
         let s = new Strip(tiles[row][0], tiles[row][1], tiles[row][2], tiles[row][3]);
         tilesAdded = s.makeMove();
+
+        let wasDifferent: boolean = Tile.areDifferentTiles(tiles[row][0], s.tiles[0])
+            || Tile.areDifferentTiles(tiles[row][1], s.tiles[1])
+            || Tile.areDifferentTiles(tiles[row][2], s.tiles[2])
+            || Tile.areDifferentTiles(tiles[row][3], s.tiles[0]);
+        if (wasDifferent) {
+            tilesAdded = true;
+        }
+
         tiles[row][0] = s.tiles[0];
         tiles[row][1] = s.tiles[1];
         tiles[row][2] = s.tiles[2];
@@ -158,6 +192,15 @@ function performLeftMove() {
     for (let row = 0; row < 4; ++row) {
         let s = new Strip(tiles[row][3], tiles[row][2], tiles[row][1], tiles[row][0]);
         tilesAdded = s.makeMove();
+
+        let wasDifferent: boolean = Tile.areDifferentTiles(tiles[row][0], s.tiles[3])
+            || Tile.areDifferentTiles(tiles[row][1], s.tiles[2])
+            || Tile.areDifferentTiles(tiles[row][2], s.tiles[1])
+            || Tile.areDifferentTiles(tiles[row][3], s.tiles[0]);
+        if (wasDifferent) {
+            tilesAdded = true;
+        }
+
         tiles[row][0] = s.tiles[3];
         tiles[row][1] = s.tiles[2];
         tiles[row][2] = s.tiles[1];

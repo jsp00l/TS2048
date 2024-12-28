@@ -26,6 +26,16 @@ class Tile implements ITile {
         return false;
     }
 
+    static areDifferentTiles(t1: ITile, t2: ITile): boolean {
+        if (t1 instanceof EmptyTile) {
+            if (t2 instanceof EmptyTile) {
+                return false;
+            }
+            return true;
+        }
+        return t1.value !== t2.value;
+    }
+
     static valueColorMap: Map<Value, Color> = (() => {
         let m: Map<Value, Color> = new Map<Value, Color>();
         m.set(2, Color.Blue);
@@ -80,6 +90,7 @@ class Strip implements IStrip {
             for (let currentIndex = 0; currentIndex < (4 - nonEmptyTiles.length); currentIndex++) {
                 this.tiles[currentIndex] = new EmptyTile(0, currentIndex as Column);
             }
+
         };
         const checkIsNotEmpty = (t1: ITile, t2: ITile): boolean => {
             return (t1 instanceof Tile) && (t2 instanceof Tile)

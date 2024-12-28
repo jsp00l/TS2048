@@ -106,7 +106,7 @@ function performRightMove() {
     return tilesAdded;
 }
 function performLeftMove() {
-    let tilesAdded;
+    let tilesAdded = false;
     for (let row = 0; row < 4; ++row) {
         let s = new Strip(tiles[row][3], tiles[row][2], tiles[row][1], tiles[row][0]);
         tilesAdded = s.makeMove();
@@ -116,26 +116,23 @@ function performLeftMove() {
         tiles[row][3] = s.tiles[0];
     }
     drawTiles();
+    return tilesAdded;
 }
 document.addEventListener("keyup", (e) => {
-    let validKey = false;
+    let shouldSpawnNewTile = false;
     if (e.key === 'a') {
-        performLeftMove();
-        validKey = true;
+        shouldSpawnNewTile = performLeftMove();
     }
-    if (e.key === 'd') {
-        performRightMove();
-        validKey = true;
+    else if (e.key === 'd') {
+        shouldSpawnNewTile = performRightMove();
     }
-    if (e.key === 'w') {
-        performUpMove();
-        validKey = true;
+    else if (e.key === 'w') {
+        shouldSpawnNewTile = performUpMove();
     }
-    if (e.key === 's') {
-        performDownMove();
-        validKey = true;
+    else if (e.key === 's') {
+        shouldSpawnNewTile = performDownMove();
     }
-    if (validKey) {
+    if (shouldSpawnNewTile) {
         spawnRandomTile();
     }
     drawTiles();

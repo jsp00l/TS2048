@@ -15,6 +15,7 @@ class Tile implements ITile {
     color: Color;
 
     static addTiles(t1: Tile, t2: Tile): Tile {
+        currentScore += t1.value + t2.value;
         return new Tile(<Value>(t1.value + t2.value), t2.row, t2.column);
     };
 

@@ -12,6 +12,7 @@ class Tile {
     column;
     color;
     static addTiles(t1, t2) {
+        currentScore += t1.value + t2.value;
         return new Tile((t1.value + t2.value), t2.row, t2.column);
     }
     ;

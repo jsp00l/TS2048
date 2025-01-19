@@ -14,7 +14,13 @@ for (let col = 0; col < 4; ++col) {
     }
 }
 window.Game.tiles = tiles;
+function drawScore() {
+    ctx.font = "48px serif";
+    ctx.fillStyle = Color.Black;
+    ctx.fillText(currentScore + "", 400, 900);
+}
 function drawTiles() {
+    ctx.clearRect(0, 0, CANVAS.width, CANVAS.height);
     for (let i = 0; i < 4; ++i) {
         for (let j = 0; j < 4; ++j) {
             const x = padding + padding * j + squareWidth * j;
@@ -32,6 +38,7 @@ function drawTiles() {
             ctx.fillText(s, -offset + x + squareWidth / 2, offset + y + squareWidth / 2);
         }
     }
+    drawScore();
 }
 tiles[0][0] = new Tile(8, 1, 2);
 tiles[1][0] = new Tile(4, 1, 2);
@@ -65,7 +72,7 @@ function spawnRandomTile() {
     }
     let [i, j] = pairs[Math.floor(Math.random() * pairs.length)];
     let spawnedTile = new Tile(2, i, j);
-    if (Math.floor(Math.random() * 100) > 75) {
+    if (Math.floor(Math.random() * 100) > 90) {
         spawnedTile = new Tile(4, i, j);
     }
     tiles[i][j] = spawnedTile;

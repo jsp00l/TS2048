@@ -2,16 +2,24 @@
 const CANVAS = document.getElementById("mainCanvas");
 const CTX = CANVAS.getContext("2d");
 const ctx = CTX;
-CANVAS.width = 800;
-CANVAS.height = 800;
-let x = [200, 200, 200];
+CANVAS.width = 1200;
+CANVAS.height = 1000;
+let currentScore = 0;
+let CLICKABLES = [];
+let HOVERBALES = [];
+class ColorImpl {
+    rgbValue;
+    constructor(rgbValue) {
+        this.rgbValue = rgbValue;
+    }
+}
 var Color;
 (function (Color) {
     Color["Black"] = "rgb(0, 0, 0)";
     Color["White"] = "rgb(255, 255, 255)";
-    Color["Red"] = "rgb(68, 7, 7)";
+    Color["Red"] = "rgb(219, 12, 12)";
     Color["RedDark"] = "rgb(189, 1, 1)";
-    Color["Blue"] = "rgb(44, 44, 114)";
+    Color["Blue"] = "rgb(158, 242, 255)";
     Color["Orange"] = "rgb(255, 170, 0)";
     Color["Purple"] = "rgb(107, 0, 207)";
     Color["Green"] = "rgb(0, 252, 29)";
@@ -21,4 +29,5 @@ var Color;
     Color["Pink"] = "rgb(255, 0, 255)";
     Color["Silver"] = "rgb(169,176,180)";
     Color["Gold"] = "rgb(255,215,0)";
+    Color["Default"] = "rgb(158, 242, 255)";
 })(Color || (Color = {}));

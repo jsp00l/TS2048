@@ -57,7 +57,6 @@ CANVAS.addEventListener("mousedown", (e) => {
 
 
 let start: number | undefined = undefined;
-let lastTimestamp: number = 0;
 
 
 function mainDrawLoop() {
@@ -100,8 +99,25 @@ animation4.assignValue = (value: number) => {
 
 let started = false;
 startButton.onClicked = () => {
-    animation1.start();
     startButton.text = started ? "Start" : "Stop";
+
+    if (!started) {
+        let somethingStarted = false;
+        for (let animation of AbstractAnimation.pausedAnimations) {
+            animation.resume();
+            somethingStarted = true;
+        }
+        if (!somethingStarted) { //Initial entry point
+            animation1.start();
+        }
+    }
+    else {
+        for (let animation of AbstractAnimation.runningAnimations) {
+            animation.pause();
+        }
+    }
+
+
     started = !started;
 }
 
@@ -138,20 +154,18 @@ animation4.calculateForT = (t: number) => {
 }
 
 
-
-
-
 function step(timestamp: number) {
     if (start === undefined) {
         start = timestamp;
     }
     const deltaTime = timestamp - lastTimestamp;
-    lastTimestamp = timestamp;
+
 
     for (let animation of AbstractAnimation.runningAnimations) {
         animation.update(timestamp);
     }
     mainDrawLoop();
+    lastTimestamp = timestamp;
     requestAnimationFrame(step);
 }
 

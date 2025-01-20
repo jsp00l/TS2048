@@ -46,7 +46,6 @@ CANVAS.addEventListener("mousedown", (e) => {
     }
 });
 let start = undefined;
-let lastTimestamp = 0;
 function mainDrawLoop() {
     ctx.clearRect(0, 0, CANVAS.width, CANVAS.height);
     blueRect.draw();
@@ -83,8 +82,22 @@ animation4.assignValue = (value) => {
 };
 let started = false;
 startButton.onClicked = () => {
-    animation1.start();
     startButton.text = started ? "Start" : "Stop";
+    if (!started) {
+        let somethingStarted = false;
+        for (let animation of AbstractAnimation.pausedAnimations) {
+            animation.resume();
+            somethingStarted = true;
+        }
+        if (!somethingStarted) {
+            animation1.start();
+        }
+    }
+    else {
+        for (let animation of AbstractAnimation.runningAnimations) {
+            animation.pause();
+        }
+    }
     started = !started;
 };
 function easeOutBounce(x) {
@@ -120,11 +133,11 @@ function step(timestamp) {
         start = timestamp;
     }
     const deltaTime = timestamp - lastTimestamp;
-    lastTimestamp = timestamp;
     for (let animation of AbstractAnimation.runningAnimations) {
         animation.update(timestamp);
     }
     mainDrawLoop();
+    lastTimestamp = timestamp;
     requestAnimationFrame(step);
 }
 requestAnimationFrame(step);

@@ -7,6 +7,7 @@ CANVAS.height = 1000;
 let currentScore = 0;
 let CLICKABLES = [];
 let HOVERBALES = [];
+let lastTimestamp = 0;
 class ColorImpl {
     rgbValue;
     constructor(rgbValue) {

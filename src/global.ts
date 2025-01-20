@@ -9,7 +9,7 @@ let currentScore: number = 0;
 let CLICKABLES: any[] = [];
 let HOVERBALES: any[] = [];
 
-
+let lastTimestamp: number = 0;
 
 class ColorImpl {
     rgbValue: string;
